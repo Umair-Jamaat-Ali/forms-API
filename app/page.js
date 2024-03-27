@@ -1,9 +1,15 @@
-import navBar from "./componenets/navbar/navBar";
+import Link from "next/link";
+
 
 export default function Home() {
   return (
     <>
-    <navBar/>
+   <div>
+    <li>
+      <Link href='/form'>Student Form</Link>
+      <Link href='/admin'>Admin</Link>
+    </li>
+   </div>
     </>
   );
 }
