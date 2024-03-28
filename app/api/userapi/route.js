@@ -28,23 +28,6 @@ export const POST = async (req) => {
     }
 }
 
-
-
-// export const DELETE = async (req) => {
-//     try {
-//         let body = await req.json();
-//         if(body.id){
-//             await User.deleteone({
-//                 _id:body.id
-//             })
-//             return NextResponse.json({ message: "Successful deleted" });
-//         }
-//     } catch (error) {
-//         console.error("Error:", error);
-//         return NextResponse.json({ message: "Something went wrong", error })
-//     }
-// }
-
 export const DELETE = async (req) => {
     try {
         let body = await req.json();
@@ -65,21 +48,3 @@ export const DELETE = async (req) => {
 
 
 
-// const myHeaders = new Headers();
-// myHeaders.append("Content-Type", "application/json");
-
-// const raw = JSON.stringify({
-//   "id": "6603e3d1016259accf49c58a"
-// });
-
-// const requestOptions = {
-//   method: "DELETE",
-//   headers: myHeaders,
-//   body: raw,
-//   redirect: "follow"
-// };
-
-// fetch("http://localhost:3000/api/userapi", requestOptions)
-//   .then((response) => response.text())
-//   .then((result) => console.log(result))
-//   .catch((error) => console.error(error));

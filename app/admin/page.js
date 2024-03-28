@@ -1,5 +1,6 @@
 import User from '@/schemas/userSchema/User'
 import React from 'react'
+import DeleteBtn from '../componenets/deleteBtn/DeleteBtn';
 
 
 
@@ -25,6 +26,7 @@ export default async function page() {
                     <p>Id : {item._id}</p>
                     <p>Name : {item.name}</p>
                     <p>Last Name : {item.lastname}</p>
+                    <DeleteBtn title="Delete" id={item._id}/>
                     <br/>
                 </div>
             )
