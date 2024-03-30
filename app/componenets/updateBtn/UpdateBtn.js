@@ -1,4 +1,8 @@
-import React from 'react'
+'use client'
+
+import UpdateModal from "../updateModal/UpdateModal"
+
+
 
 export default function UpdateBtn({title}) {
   return (

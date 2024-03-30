@@ -68,24 +68,3 @@ export const PUT = async (req) => {
 
 
 
-
-// const myHeaders = new Headers();
-// myHeaders.append("Content-Type", "application/json");
-
-// const raw = JSON.stringify({
-//   "id": "6603eda4016259accf49c594",
-//   "name": "Khadija",
-//   "lastname": "Umair"
-// });
-
-// const requestOptions = {
-//   method: "PUT",
-//   headers: myHeaders,
-//   body: raw,
-//   redirect: "follow"
-// };
-
-// fetch("http://localhost:3000/api/userapi", requestOptions)
-//   .then((response) => response.text())
-//   .then((result) => console.log(result))
-//   .catch((error) => console.error(error));
