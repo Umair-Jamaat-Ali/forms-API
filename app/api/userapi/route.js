@@ -5,10 +5,6 @@ import { NextResponse } from "next/server";
 
 dbConnect()
 
-export const GET = async (req) => {
-    return NextResponse.json({ message: "get request called" })
-}
-
 export const POST = async (req) => {
 
 
@@ -27,6 +23,21 @@ export const POST = async (req) => {
         return NextResponse.json({ message: "Something went wrong", error });
     }
 }
+
+
+export const GET = async (req) => {
+    try {
+        
+        const users = await User.find();
+
+        
+        return NextResponse.json({ users });
+    } catch (error) {
+        console.error("Error:", error);
+        
+        return NextResponse.json({ message: "Something went wrong", error });
+    }
+};
 
 export const DELETE = async (req) => {
     try {
