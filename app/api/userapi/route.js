@@ -10,7 +10,7 @@ export const POST = async (req) => {
 
     try {
         let body = await req.json();
-        console.log("body", body);
+        // console.log("body", body);
         if (body.name && body.lastname) {
             let newUsers = new User(body);
             await newUsers.save();

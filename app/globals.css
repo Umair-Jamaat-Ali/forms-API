@@ -2,4 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
+input{
+    @apply w-60 h-10 my-4 pl-4 border border-slate-900 rounded-md
+}
