@@ -1,4 +1,5 @@
 'use client'
+import axios from 'axios';
 import React, { useState } from 'react'
 
 export default function page() {
@@ -11,34 +12,52 @@ export default function page() {
 
     const saveHandler = async (e) => {
         e.preventDefault();
+        if (!name || !password || !email) {
+            setError("All fields are required");
+            return;
+        }
         try {
-            if (!name || ! password || !email) {
-                setError("All fields are required")
-                return
-            }
+            // const userExistResponse = await fetch("http://localhost:3000/api/userExist", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: JSON.stringify({ email })
+            // });
+            // const userData = await userExistResponse.json();
+            // const { user } = userData;
+            // if (user) {
+            //     setError("User already exists");
+            //     return;
+            // }
+            
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
-
+    
             const raw = JSON.stringify({
-                name ,
+                name,
                 email,
                 password
             });
-
+    
             const requestOptions = {
                 method: "POST",
                 headers: myHeaders,
                 body: raw,
                 redirect: "follow"
             };
-
-          const res = await fetch("http://localhost:3000/api/signin", requestOptions)
-                alert("User successfully complete Registration")
-                
+    
+            const res = await fetch("http://localhost:3000/api/signin", requestOptions);
+            if (!res.ok) {
+                throw new Error("Failed to register user");
+            }
+            alert("User successfully registered");
         } catch (error) {
-            console.log("Error", error);
+            console.error("Error:", error);
+            setError("Something went wrong");
         }
-    }
+    };
+    
 
     return (
         <>
@@ -55,8 +74,8 @@ export default function page() {
                             className='w-20 h-7 rounded-md bg-green-700 ml-20'>
                             Submit
                         </button>
-                        {error&&(
-                       <span className='bg-red-600 rounded-md px-4 py-2 w-30'>{error}</span> 
+                        {error && (
+                            <span className='bg-red-600 rounded-md px-4 py-2 w-30'>{error}</span>
                         )}
                     </form>
                 </div>

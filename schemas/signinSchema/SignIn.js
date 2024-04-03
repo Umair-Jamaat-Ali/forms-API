@@ -6,14 +6,12 @@ const signInSchema = new mongoose.Schema({
         type : String,
         required : true,
         maxLength: [200, "Too much length"],
-        minLength: [5, "Too short length"],
         trim:true
     },
     email:{
         type: String,
         required:true,
         maxLength:[200, "Too much length"],
-        minLength: [15, "Too short length"],
         trim:true,
         unique:true,
         match: [
