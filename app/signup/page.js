@@ -1,6 +1,7 @@
 'use client'
-import axios from 'axios';
+
 import React, { useState } from 'react'
+import { useRouter}  from 'next/navigation';
 
 export default function page() {
 
@@ -9,6 +10,8 @@ export default function page() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
+    const router = useRouter();
 
     const saveHandler = async (e) => {
         e.preventDefault();
@@ -52,6 +55,7 @@ export default function page() {
                 throw new Error("Failed to register user");
             }
             alert("User successfully registered");
+            router.replace("/signin")
         } catch (error) {
             console.error("Error:", error);
             setError("Something went wrong");

@@ -1,6 +1,9 @@
 
+import dbConnect from "@/config/dbConnect";
+import SignIn from "@/schemas/signinSchema/SignIn";
 import NextAuth from "next-auth/next";
 import  CredentialsProvider  from "next-auth/providers/credentials";
+import bcrypt from 'bcrypt'
 
 
 const authOptions = {
@@ -9,8 +12,28 @@ const authOptions = {
       name:"credentials",
       credentials:{},
       async authorize(credentials){
-        const user = {id:"1"};
-        return user
+        const {email,password} = credentials;
+
+        try {
+          await dbConnect()
+          let userFound = await SignIn.findOne({email})
+
+          if (!userFound) {
+            throw new Error("user not found")
+            return null
+          }
+          let passwordFound = await bcrypt.compare(password, userFound.password)
+
+          if (!passwordFound) {
+            throw new Error("user not found")
+            return null
+          }
+
+          return userFound;
+        } catch (error) {
+          console.log("User found Error", error);
+        }
+
       }
     })
   ],
@@ -19,7 +42,7 @@ const authOptions = {
   },
   secret:process.env.NEXTAUTH_SECRET,
   pages:{
-    signIn: "/"
+    signIn: "/signin"
   },
 }
 

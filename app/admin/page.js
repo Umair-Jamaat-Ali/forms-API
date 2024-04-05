@@ -1,10 +1,7 @@
-'use client'
-import User from '@/schemas/userSchema/User'
 import React from 'react'
 import DeleteBtn from '../componenets/deleteBtn/DeleteBtn';
 import UpdateModal from '../componenets/updateModal/UpdateModal';
 import axios from 'axios';
-import { signOut } from 'next-auth/react';
 import SignOut from '../componenets/signOut/SignOut';
 
 
@@ -23,17 +20,16 @@ const fetchUsers = async () => {
     }
 }
 
-const signOutHandler =  () => {
-    signOut()
-}
+
 
 export default async function page() {
 
     const data = await fetchUsers();
     return (
         <>
-       <button onClick={signOutHandler}>Sign Out</button>
+
         <div>Fetching Data</div>
+        <div><SignOut title={'Log Out'}/> </div>
             {
                 data?.map((item, index) => {
                     return (
