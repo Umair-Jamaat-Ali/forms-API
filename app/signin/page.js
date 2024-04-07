@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import Forget_Password from '../componenets/forget-password/Forget-Password';
+import ForgetPassword from '../componenets/forget-password/forgetPassword';
 
 
 export default function SignIn() {
@@ -80,7 +80,7 @@ export default function SignIn() {
                   </label>
                   <div className="text-sm">
                     <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                      <Forget_Password/>
+                      <ForgetPassword/>
                     </a>
                   </div>
                 </div>

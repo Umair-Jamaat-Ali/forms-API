@@ -26,6 +26,14 @@ const signInSchema = new mongoose.Schema({
         trim: true,
         required: [true, "password is required"],
       },
+      reset_token:{
+        type:String
+      },
+      reset_token_expiration:{
+        type: Date
+      }
+
+      
 },{timestamps:true})
 
 signInSchema.pre("save", async function (next) {
