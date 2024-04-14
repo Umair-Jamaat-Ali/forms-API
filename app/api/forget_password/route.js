@@ -1,8 +1,11 @@
 // import dbConnect from "@/config/dbConnect"
 // import SignIn from "@/schemas/signinSchema/SignIn"
-// import  NextResponse  from "next/server";
-// import moment from "moment";
-// import crypto from 'crypto'
+
+import dbConnect from "@/config/dbConnect"
+import SignIn from "@/schemas/signinSchema/SignIn";
+import  NextResponse  from "next/server";
+import moment from "moment";
+import crypto from 'crypto'
 
 
 
@@ -77,67 +80,99 @@
 
 // forgetPassword.js
 
-import dbConnect from "@/config/dbConnect";
-import SignIn from "@/schemas/signinSchema/SignIn";
-import nodemailer from 'nodemailer';
-import moment from "moment";
-import crypto from 'crypto';
-import NextResponse from "next/server";
+// import dbConnect from "@/config/dbConnect";
+// import SignIn from "@/schemas/signinSchema/SignIn";
+// import nodemailer from 'nodemailer';
+// import moment from "moment";
+// import crypto from 'crypto';
+// import NextResponse from "next/server";
+
+// export const POST = async (req) => {
+//     try {
+//         await dbConnect();
+
+//         const body = await req.json();
+//         const userMail = body.email;
+
+//         if (!userMail) {
+//             throw new Error("Please enter a valid email");
+//         }
+
+//         const findUser = await SignIn.findOne({ email: userMail });
+//         if (!findUser) {
+//             throw new Error("User not found. Please enter a valid email");
+//         }
+
+//         let resetToken = crypto.randomBytes(10).toString('hex');
+//         let resetTokenExpiration = moment().add(1, "hour").toDate();
+
+//         resetToken = findUser.reset_token;
+//         resetTokenExpiration = findUser.reset_token_expiration;
+//         await findUser.save();
+
+//         const transporter = nodemailer.createTransport({
+//             host: process.env.EMAIL_HOST,
+//             port: process.env.EMAIL_PORT,
+//             auth: {
+//                 user: process.env.EMAIL_USER,
+//                 pass: process.env.EMAIL_PASS,
+//             }
+//         });
+
+//         const resetLink = `${process.env.NEXTAUTH_URL}/forget_password/?token=${resetToken}`;
+
+//         const mailOptions = {
+//             from: process.env.EMAIL_USER,
+//             to: userMail,
+//             subject: "Password Reset",
+//             html: `Please click <a href="${resetLink}">here</a> to reset your password.`
+//         };
+
+//         const sent = await transporter.sendMail(mailOptions);
+
+//         if (!sent) {
+//             throw new Error("Mail not sent. Something went wrong");
+//         }
+
+//         return NextResponse.json({ message: "Mail successfully sent" });
+//     } catch (error) {
+//         console.error("Error:", error);
+//         return NextResponse.json({ message: "Something went wrong" });
+//     }
+// };
+
+// export const GET = async (req) => {
+//     return NextResponse.json({ message: "GET request called" });
+// };
+
 
 export const POST = async (req) => {
     try {
-        await dbConnect();
+       await dbConnect();
+        let {email} = await req.json()
 
-        const body = req.json();
-        const userMail = body.mail;
+       let existUser = await SignIn.findOne({email})
+       console.log(existUser);
 
-        if (!userMail) {
-            throw new Error("Please enter a valid email");
-        }
+       if (!existUser) {
+            return NextResponse.json({message:"user don't exist", status : 400})
+       }
 
-        const findUser = await SignIn.findOne({ mail: userMail });
-        if (!findUser) {
-            throw new Error("User not found. Please enter a valid email");
-        }
+       const resetToken = crypto.randomBytes(20).toString('hex');
+       const passwordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+       const passwordResetExpi = Date.now() + 3600000;
+       
+       existUser.reset_token = passwordResetToken;
+       existUser.reset_token_expiration = passwordResetExpi;
 
-        const resetToken = crypto.randomBytes(10).toString('hex');
-        const resetTokenExpiration = moment().add(1, "hour").toDate();
+       const resetUrl = `${process.env.NEXTAUTH_URL}/forget_password/?token=${resetToken}`
 
-        resetToken = findUser.reset_token;
-        resetTokenExpiration = findUser.reset_token_expiration;
-        await findUser.save();
 
-        const transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: process.env.EMAIL_PORT,
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            }
-        });
+       console.log(resetUrl);
 
-        const resetLink = `${process.env.NEXTAUTH_URL}/forget_password/?token=${resetToken}`;
 
-        const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: userMail,
-            subject: "Password Reset",
-            html: `Please click <a href="${resetLink}">here</a> to reset your password.`
-        };
 
-        const sent = await transporter.sendMail(mailOptions);
-
-        if (!sent) {
-            throw new Error("Mail not sent. Something went wrong");
-        }
-
-        return NextResponse.json({ message: "Mail successfully sent" });
     } catch (error) {
-        console.error("Error:", error);
-        return NextResponse.json({ message: "Something went wrong" });
+        
     }
-};
-
-export const GET = async (req) => {
-    return NextResponse.json({ message: "GET request called" });
-};
+}
