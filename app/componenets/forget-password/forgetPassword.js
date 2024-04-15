@@ -96,11 +96,15 @@
 // forgetPassword.js (or whatever you name the file)
 
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function ForgetPassword() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+
+  const router = useRouter();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -113,12 +117,38 @@ export default function ForgetPassword() {
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    // try {
+    //   const result = await axios.post('/api/forget_password', { email });
+    //   console.log(result.data);
+    // } catch (err) {
+    //   console.error(err.response.data);
+    // }
+
     try {
-      const result = await axios.post('/api/forget_password', { email });
-      console.log(result.data);
-    } catch (err) {
-      console.error(err.response.data);
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      
+      const raw = JSON.stringify({
+        "email": "umairansari758@gmail.com"
+      });
+      
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+      };
+      
+      let result = await fetch("http://localhost:3000/api/forget_password", requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+        console.log("Result", result);
+    } catch (error) {
+      console.log("Error", error);
     }
+
+
   };
 
   return (
@@ -132,8 +162,11 @@ export default function ForgetPassword() {
               <label>E-Mail</label>
               <input placeholder='Enter your email' value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
+            <div>
+              {error}
+            </div>
             <div className='btn'>
-              <button type="submit">Submit</button>
+              <button type="submit" onClick={submitHandler}>Submit</button>
             </div>
           </form>
         </div>

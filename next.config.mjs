@@ -5,7 +5,7 @@ const nextConfig = {
         NEXTAUTH_SECRET: "A1.b2.c3.",
         NEXTAUTH_URL: "http://localhost:3000",
         EMAIL_HOST: "smtp.gmail.com",
-        EMAIL_PORT: "587",
+        EMAIL_PORT: 587,
         EMAIL_USER: "umairjamaatali6465@gmail.com",
         EMAIL_PASS: "yxukfmhmyfyikcem"
 
