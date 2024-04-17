@@ -84,7 +84,7 @@ export const PUT = async (req) => {
         let body = await req.json();
         console.log("body",body);
         let newPassword = body.password;
-        let reset_token = body.token_token;
+        let reset_token = body.token;
         console.log("newPassword",newPassword);
         console.log("reset_token",reset_token);
 
