@@ -35,7 +35,7 @@ export default function ForgetPassword() {
       myHeaders.append("Content-Type", "application/json");
       
       const raw = JSON.stringify({
-        "email": "umairansari758@gmail.com"
+        email,
       });
       
       const requestOptions = {
