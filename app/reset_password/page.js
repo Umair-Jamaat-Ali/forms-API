@@ -7,7 +7,7 @@ import { useRouter ,useSearchParams ,usePathname   } from "next/navigation";
 const page = ({params}) => {
   const router = useRouter();
   const searchParams = useSearchParams()
-  const pathname = usePathname()
+  // const pathname = usePathname()
   const [password, setPassword] = useState("");
 
   

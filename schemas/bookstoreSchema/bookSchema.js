@@ -30,6 +30,9 @@ const BookInfo= new mongoose.Schema({
         max: [200000000000000000, "Too much price"],
         trim:true
     },
+    // slug:{
+
+    // },
     category:{
         type:String,
         required:[true,"Please select category"],

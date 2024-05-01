@@ -9,6 +9,7 @@ export default function Home() {
       <Link href='/form'>Student Form</Link>
       <Link href='/admin'>Admin</Link>
       <Link href='/signup'>SignIn</Link>
+      <Link href='/bookUpload'>Books Upload</Link>
     </li>
    </div>
     </>
