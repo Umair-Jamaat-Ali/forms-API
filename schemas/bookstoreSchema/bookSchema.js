@@ -46,7 +46,7 @@ const BookInfo= new mongoose.Schema({
         trim:true
     },
     imgs_url:{
-            type:Array,
+            type:String,
             default:[],
             required:[true, "Please add images"]
         },
