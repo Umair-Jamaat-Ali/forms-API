@@ -7,13 +7,17 @@ const nextConfig = {
         EMAIL_HOST: "smtp.gmail.com",
         EMAIL_PORT: 587,
         EMAIL_USER: "umairjamaatali6465@gmail.com",
-        EMAIL_PASS: "yxukfmhmyfyikcem"
+        EMAIL_PASS: "yxukfmhmyfyikcem",
 
 
 
+        publicKey: "public_IuIlJm3zrHxJP/3vmy3pjXaZrGk=",
+        urlEndpoint: "https://ik.imagekit.io/gm3p1cxm5",
 
-
+        privateKey : "private_Sac9qLocLkxjPhaHHXaTMxvYdDE="
     },
+
+    
 
 };
 
