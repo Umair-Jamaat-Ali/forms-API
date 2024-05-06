@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import { model } from "mongoose";
+
 const BookInfo= new mongoose.Schema({
+
     title:{
         type:String,
         required:[true,"Title is required"],
@@ -21,12 +22,12 @@ const BookInfo= new mongoose.Schema({
     price:{
         type:Number,
         required:[true,"Price is required"],
-        max: [200000000000000000, "Too much price"],
+        max: [20000000000, "Too much price"],
         trim:true
     },
-    category:{
+    catogery:{
         type:String,
-        required:[true,"Please select category"],
+        required:[true,"Please select catogery"],
         maxLength: [200, "Too much length"],
         trim:true
     },
@@ -36,7 +37,7 @@ const BookInfo= new mongoose.Schema({
         maxLength: [200000, "Too much length"],
         trim:true
     },
-    img:{
+    imgs_url:{
             type:Array,
             default:[],
             required:[true, "Please add images"]

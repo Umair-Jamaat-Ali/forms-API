@@ -2,21 +2,21 @@
 import dbConnect from "@/config/dbConnect";
 import SignIn from "@/schemas/signinSchema/SignIn";
 import NextAuth from "next-auth/next";
-import  CredentialsProvider  from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcrypt'
 
 
 const authOptions = {
-  providers:[
+  providers: [
     CredentialsProvider({
-      name:"credentials",
-      credentials:{},
-      async authorize(credentials){
-        const {email,password} = credentials;
+      name: "credentials",
+      credentials: {},
+      async authorize(credentials) {
+        const { email, password } = credentials;
 
         try {
           await dbConnect()
-          let userFound = await SignIn.findOne({email})
+          let userFound = await SignIn.findOne({ email })
 
           if (!userFound) {
             throw new Error("user not found")
@@ -37,14 +37,31 @@ const authOptions = {
       }
     })
   ],
-  session:{
-    strategy:"jwt"
+
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub;
+      }
+      console.log('session', session)
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
+      }
+      console.log('token :>> ', token);
+      return token;
+    },
   },
-  secret:process.env.NEXTAUTH_SECRET,
-  pages:{
+  session: {
+    strategy: "jwt"
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
     signIn: "/signin"
   },
 }
 
 const handler = NextAuth(authOptions);
-export {handler as GET, handler as POST};
+export { handler as GET, handler as POST };
