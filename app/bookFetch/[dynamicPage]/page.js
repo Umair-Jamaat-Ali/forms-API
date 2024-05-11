@@ -1,4 +1,5 @@
 import axios from "axios";
+import Image from "next/image";
 
 export default async function page({params}) {
  const bookId= params.dynamicPage;
@@ -53,9 +54,11 @@ export default async function page({params}) {
         </nav> */}
 
         {/* Image gallery */}
-        <div className="mx-auto mt-6 bg-[#563790]  max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+        <div className="mx-auto mt-6  max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
           <div className="aspect-h-4 bg-gray-400 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
-            <img
+            <Image
+            width={500}
+            height={500}
               src={item.imgs_url[0].img_url}
               alt={""}
               className="h-full w-full object-cover object-center"
@@ -63,14 +66,18 @@ export default async function page({params}) {
           </div>
           <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
             <div className="aspect-h-2 bg-gray-400 aspect-w-3 overflow-hidden rounded-lg">
-              <img
+              <Image
+            width={500}
+            height={500}
                 src={item.imgs_url[1].img_url}
                 alt={""}
                 className="h-full w-full object-cover object-center"
               />
             </div>
             <div className="aspect-h-2 bg-gray-400 aspect-w-3 overflow-hidden rounded-lg">
-              <img
+              <Image
+            width={500}
+            height={500}
                 src={item.imgs_url[2].img_url}
                 alt={""}
                 className="h-full w-full object-cover object-center"
@@ -78,7 +85,9 @@ export default async function page({params}) {
             </div>
           </div>
           <div className="aspect-h-5 bg-gray-400 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
-            <img
+            <Image
+            width={500}
+            height={500}
               src={item.imgs_url[3].img_url}
               alt={""}
               className="h-full w-full object-cover object-center"
@@ -232,7 +241,7 @@ export default async function page({params}) {
             {/* Description and details */}
             <div>
               <h3 className="sr-only">Description</h3>
-
+              <h2 className="text-sm font-medium text-gray-900">Details</h2>
               <div className="space-y-6">
                 <p className="text-base text-gray-900">{item.description}</p>
               </div>
@@ -253,7 +262,6 @@ export default async function page({params}) {
             </div>
 
             <div className="mt-10">
-              <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
               {/* <div className="mt-4 space-y-6">
                 <p className="text-sm text-gray-600">{product.details}</p>

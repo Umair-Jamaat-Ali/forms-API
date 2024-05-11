@@ -13,7 +13,7 @@ const fetchUsers = async () => {
                 throw new Error('Failed to fetch users');
             }
           let data = response.data.users;
-          console.log("data",data);
+        //   console.log("data",data);
             return data
     } catch (error) {
         console.error("Error", error);

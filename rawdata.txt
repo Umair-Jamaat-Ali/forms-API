@@ -1,0 +1,128 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import Loader from "@/(components)/loader/loader";
+
+export default function ClientSideAPI() {
+  const [products, setProducts] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [newProduct, setNewProduct] = useState({
+    id: "",
+    title: "",
+    description: "",
+    image: "",
+  });
+
+  const fetchProducts = async () => {
+    try {
+      setLoader(true);
+      let response = await fetch("https://fakestoreapi.com/products");
+      response = await response.json();
+      setProducts(response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const onDeleteHandler = (id) => {
+    const filteredProducts = products.filter((item) => item.id !== id);
+    setProducts(filteredProducts);
+  };
+
+  const onAddHandler = () => {
+    setProducts([...products, newProduct]);
+    setNewProduct({
+      id: "",
+      title: "",
+      description: "",
+      image: "",
+    });
+  };
+
+  const handleInputChange = (e) => {
+    // const { name, value } = e.target;
+    const name = e.target.name;
+    const value = e.target.value;
+    setNewProduct((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  return (
+    <div>
+      <h1>FakeAPI</h1>
+      <div>
+        <h2>Add Product</h2>
+        <input
+          type="text"
+          name="id"
+          placeholder="ID"
+          value={newProduct.id}
+          onChange={handleInputChange}
+        />
+        <input
+          type="text"
+          name="title"
+          placeholder="Title"
+          value={newProduct.title}
+          onChange={handleInputChange}
+        />
+        <input
+          type="text"
+          name="description"
+          placeholder="Description"
+          value={newProduct.description}
+          onChange={handleInputChange}
+        />
+        <input
+          type="text"
+          name="image"
+          placeholder="Image URL"
+          value={newProduct.image}
+          onChange={handleInputChange}
+        />
+        <button onClick={onAddHandler}>Add Product</button>
+      </div>
+
+      {products.length ? (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Image</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product.id}>
+                <td>{product.id}</td>
+                <td>
+                  <img src={product.image} width={100} alt="" />
+                </td>
+                <td>{product.title}</td>
+                <td>{product.description}</td>
+                <td>
+                  <button onClick={() => onDeleteHandler(product.id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        loader && <Loader />
+      )}
+    </div>
+  );
+}
