@@ -2,10 +2,13 @@
 import { useState } from "react";
 import Profile from "../profile/Profile";
 import { TfiShoppingCartFull } from "react-icons/tfi";
+import { useSession } from "next-auth/react";
+import SignIn from "../signin/SignIn";
 
 export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
+  const {data : session} = useSession()
 
   const openModel = () => {
     setIsOpen(!isOpen)
@@ -99,10 +102,10 @@ export default function Navbar() {
               </div>
             </div>
 
-            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <div class="absolute inset-y-0 right-[40px] lg:right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <button
                 type="button"
-                class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                class="hidden md:block relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
               >
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">View notifications</span>
@@ -110,7 +113,10 @@ export default function Navbar() {
               </button>
 
             </div>
-             <Profile/>
+            <div className="ml-4">
+              {session? <Profile/> : <SignIn />}
+             
+          </div>
           </div>
         </div>
 

@@ -7,14 +7,7 @@ export default function Home() {
     <>
    <div>
     <NavBar/>
-    {/* <li className="flex justify-center gap-4">
-      <Link href='/form'>Student Form</Link>
-      <Link href='/admin'>Admin</Link>
-      <Link href='/signup'>SignIn</Link>
-      <Link href='/bookUpload'>Books Upload</Link>
-      <Link href='/bookFetch'>All Books </Link>
-      <Link href='/dynamicPage'>Dynamic Page </Link>
-    </li> */}
+    
    </div>
     </>
   );

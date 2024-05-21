@@ -3,12 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const fetchBooks = async () => {
-    // const requestOptions = {
-    //     method: "GET",
-    //     redirect: "follow"
-    //   };
       
-     let result = await axios.get("http://localhost:3000/api/bookFetch", )
+     let result = await axios.get("/api/bookFetch", )
         // console.log("result", result);
         if (!result) {
             throw new Error("failed to fetching books")

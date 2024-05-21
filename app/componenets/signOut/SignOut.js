@@ -7,14 +7,14 @@ export default function SignOut({title}) {
   const router = useRouter();
 
   const signOutHandler = () => {
-    signOut();
-    router.replace('/imageUpload')
+    signOut({redirect: false});
+    router.replace('/signin')
     
   }
   return (
-    <div className="w-[120px] h-[40px] bg-amber-500 pt-2 pl-4 rounded-xl hover:bg-amber-900 hover:scale-x-105 hover:scale-y-105 cursor-pointer">
-  <button onClick={signOutHandler} >{title}</button>
-</div>
+    
+    <button type="button" onClick={signOutHandler} class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">{title}</button>
+
 
   )
 }
